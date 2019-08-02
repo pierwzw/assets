@@ -190,7 +190,7 @@ $("#scrolldiv").textSlider({line: 1, speed: 300, timer: 6000});
             + "    <div class=\"ds-payment-img\">"
             + "     <div class=\"qrcode-img qrCode_0\" id=\"qrCode_0\">"
             + "      <div class=\"qrcode-border box-size\" style=\"border: 9.02px solid rgb(60, 175, 54\">"
-            + "       <img  class=\"qrcode-img qrCode_0\" id=\"qrCode_0\" src='/img/shang/weixinpay.jpg'  />"
+            + "       <img  class=\"qrcode-img qrCode_0\" id=\"qrCode_0\" src='/img/shang/wxpay.jpg'  />"
             + "      </div>"
             + "      <p class=\"qrcode-tip\">打赏</p>"
             + "     </div>"
@@ -263,7 +263,7 @@ function deleteComment(id) {
         $.ajax({
             async: false,
             type: "POST",
-            url: '/admin/comment/delete/' + id,
+            url: '/comment/delete/' + id,
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "text",
             complete: function () {
@@ -275,10 +275,11 @@ function deleteComment(id) {
 
 //评论区域
 $(".comment-reply-link").click(function () {
-    var authorName = $(this).parents('.comment-author').find("strong").text();
+    var authorName = $(this).parents('.comment').eq(0).find("strong").eq(0).text();
+    console.log(authorName);
     $("#cancel-comment-reply-link").show();
     $("#reply-title-word").html("回复 " + authorName);
-    var commentId = $(this).parents('.comment-body').attr("id").match(/\d+/g);
+    var commentId = $(this).parents('.comment').find('.comment-body').attr("id").match(/\d+/g);
     $("input[name=commentPid]").attr("value", commentId);
     $("input[name=commentPname]").attr("value", authorName);
     $("#comment").attr("placeholder", "@ " + authorName)
@@ -289,6 +290,7 @@ $("#cancel-comment-reply-link").click(function () {
     $("input[name=commentPid]").attr("value", 0);
     $("input[name=commentPname]").attr("value", "");
     $("#reply-title-word").html("发表评论");
+    $("#comment").removeAttr("placeholder")
 })
 
 //文章浏览量+1
@@ -360,8 +362,8 @@ $("#comment_form").submit(function () {
                 localStorage.setItem('author', $("#author_name").val());
                 localStorage.setItem('email', $("#author_email").val());
                 localStorage.setItem('url', $("#author_url").val());
-                window.setTimeout(window.location.reload, 2000);
-                return false;
+                window.setTimeout(window.location.reload(), 2000);
+                /*return false;*/
             } else {
                 layer.msg(data.msg);
             }
@@ -371,6 +373,12 @@ $("#comment_form").submit(function () {
         }
     })
     return false;
+})
+
+$(".comment-ch").hover(function () {
+    $(this).find(".reply a").css("color", "#ccc")
+}, function () {
+    $(this).find(".reply a").css("color", '')
 })
 
 //百度分享
@@ -385,6 +393,23 @@ window._bd_share_config = {
         "bdSize": "16"
     },
     "share": {},
+    "slide" : [{
+        bdImg : 0,
+        bdPos : "left",
+        bdTop : 100
+    }],
+    image : [{
+       /* "tag" : "img_1",*/
+        viewType : 'list',
+        viewPos : 'top',
+        viewColor : 'black',
+        viewSize : '16',
+        viewList : ['qzone','tsina','weixin']
+    }],
+    selectShare : [{
+        "bdSelectMiniList" : ['qzone','weixin','tqf'],
+        "bdContainerClass" : "site-main"
+    }]
     // "image": {"viewList": ["qzone", "tsina", "tqq", "renren", "weixin"], "viewText": "分享到：", "viewSize": "16"},
     //  "selectShare": {"bdContainerClass": null, "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"]}
 };

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+
+    <title>登录页</title>
+    <link rel="stylesheet" href="../plugin/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/login_register.css">
+    <!--<link rel="stylesheet" href="../plugin/login/login.min.css">-->
+    <link rel="shortcut icon" href="../img/logo.jpg">
+    <style>
+        .layui-form-checkbox {
+            display: none;
+        }
+        .layui-form input[type=checkbox] {
+            margin-bottom: unset;
+        }
+        input[type=checkbox] {
+            border: 1px solid #b4b9be;
+            background: #fff;
+            color: #555;
+            clear: none;
+            cursor: pointer;
+            display: inline-block;
+            line-height: 0;
+            height: 16px;
+            margin: -4px 4px 0 0;
+            outline: 0;
+            padding: 0!important;
+            text-align: center;
+            vertical-align: middle;
+            width: 16px;
+            min-width: 16px;
+            /*-webkit-appearance: none;*/
+            -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+            -webkit-transition: .05s border-color ease-in-out;
+            transition: .05s border-color ease-in-out;
+        }
+        .verifyCode-input {
+            float: left;
+        }
+        .verifyCode {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-main">
+    <header class="layui-elip">登录</header>
+    <form class="layui-form">
+        <div class="layui-input-inline">
+            <input type="text" name="username" required lay-verify="required" placeholder="用户名" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <div class="layui-input-inline">
+            <input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <div class="layui-input-inline">
+            <div class="verifyCode-input">
+                <input type="text" name="verifycode" required lay-verify="required" placeholder="验证码" autocomplete="off"
+                        class="layui-input">
+            </div>
+
+            <div class="verifyCode">
+                <img src="/getVerifyCode" id="verifyCode"
+                     alt="看不清楚？请点击刷新验证码" onclick="javascript:reloadCode();" class="yzm-img" />
+            </div>
+        </div>
+        <div class="layui-input-inline login-btn">
+            <button lay-submit lay-filter="login" class="layui-btn">登录</button>
+        </div>
+        <p class="forgetmenot">
+            <label for="rememberme">
+                <input name="rememberme" type="checkbox" id="rememberme" value="1" checked /> 记住密码
+            </label>
+        </p>
+        <hr/>
+        <!--<div class="layui-input-inline">
+            <button type="button" class="layui-btn layui-btn-primary">QQ登录</button>
+        </div>
+        <div class="layui-input-inline">
+            <button type="button" class="layui-btn layui-btn-normal">微信登录</button>
+        </div>-->
+        <p><a href="register.html" class="fl">立即注册</a><a href="javascript:;" class="fr">忘记密码？</a></p>
+    </form>
+</div>
+<script src="../js/jquery.min.js"></script>
+<script src="../plugin/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','jquery'], function () {
+        // 操作对象
+        var form = layui.form;
+        var $ = layui.jquery;
+        form.on('submit(login)',function (data) {
+            // console.log(data.field);
+            $.ajax({
+                url:'/loginVerify',
+                data:$(".layui-form").serialize(),
+                dataType:'json',
+                type:'post',
+                success:function (data) {
+                    /*var json = JSON.parse(data)*/
+                    if (data.code === '0'){
+                        location.href = getParam('path');
+                    }else if (data.code === "3"){
+                        layer.msg('验证码错误');
+                    }else{
+                        layer.msg('登录名或密码错误');
+                    }
+                }
+            })
+            return false;
+        })
+
+    });
+    /*$(".layui-btn").click(function () {
+        // console.log(data.field);
+        $.ajax({
+            url:'/loginVerify',
+            data:$(".layui-form").serialize(),
+            dataType:'json',
+            type:'post',
+            success:function (data) {
+                /!*var json = JSON.parse(data)*!/
+                if (data.code === '0'){
+                    location.href = "/index";
+                }else if (data.code === "3"){
+                    layer.msg('验证码错误');
+                }else{
+                    layer.msg('登录名或密码错误');
+                }
+            }
+        })
+        return false;
+    })*/
+
+    /**
+     * 刷新验证码
+     */
+    function reloadCode(){
+        var time = new Date().getTime();
+        document.getElementById("verifyCode").src="/getVerifyCode?d=" + time;
+    }
+    function checkLoginNoNull() {
+        if ($.trim($("#verifycode").val()) == "") {
+            layer.msg("验证码不能为空！请重新输入！");
+            return false;
+        }
+    }
+    function getParam(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null){
+            return  unescape(r[2]);
+        }
+        return null;
+    }
+</script>
+</body>
+</html>

@@ -87,7 +87,7 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
                             '<div class="clearfix">' +
                                 '<label class="fd-lable fl">' + "内容" + '</label>' +
                                 '<div class="item-content fl">' +
-                                    '<textarea rows="4" placeholder="请输入提交内容..." class="input textarea fd-content" oninput="checksum()"></textarea>' +
+                                    '<textarea rows="4" placeholder="请输入提交内容..." class="input textarea fd-content" oninput="checksum(100)"></textarea>' +
                                 '</div>' +
                                 '<div class="input_can" style="float: right;">' +
 
@@ -138,15 +138,15 @@ function changea(onthis) {
     }
 }
 
-function checksum() {
+function checksum(sum) {
     var inputedNum = $(".fd-content").val().length;     //这里可以用input,也可以keyup,总之就是事件监听
-    var canInputNum = parseInt(100 - inputedNum);           //剩余可输入字数
+    var canInputNum = parseInt(sum - inputedNum);           //剩余可输入字数
 
     if (canInputNum > 0) {
         $(".input_can").html("你还可以输入" + canInputNum + "字");
     } else {
         $(".input_can").html("你还可以输入0字");
-        $(".fd-content").val($(".fd-content").val().substring(0, 100));    //当输入500字后 无法再输入
+        $(".fd-content").val($(".fd-content").val().substring(0, sum));    //当输入500字后 无法再输入
     }
 }
 

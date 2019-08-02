@@ -227,7 +227,7 @@ a, button, input {
 }
 
 .logo-site img, .logo-sites img {
-    width: 220px;
+    width: 120px;
     max-height: 50px;
 }
 
@@ -418,9 +418,25 @@ a, button, input {
     margin: 0 5px 0 0;
 }
 
-.user-login, .nav-login {
+.menu-left {
+    top: 10px;
+    left: 20px;
+    position: relative;
     float: left;
     margin-left: 5px;
+}
+
+.menu-right {
+    bottom: 45px;
+    /* right: 40px; */
+    position: relative;
+    float: right;
+    margin-left: 5px;
+}
+
+.user-login {
+    float: right;
+    margin-right: 20px;
 }
 
 #user-profile a:hover {
@@ -510,9 +526,9 @@ a, button, input {
 }
 /** 菜单 **/
 #top-menu {
-    width: 1200px;
+    width: 1230px;
     margin: 0 auto;
-    display: table;
+    /*display: table;*/
     transition-duration: .5s;
 }
 
@@ -606,7 +622,7 @@ a, button, input {
 }
 /*一级样式*/
 #site-nav-wrap {
-    float: right;
+    float: left;
     max-width: 70%;
 }
 
@@ -3369,15 +3385,29 @@ img.alignleft {
 
 .comment-list,.comment-list ol {
     list-style: none;
+    padding-bottom: 10px;
 }
 
-.comment-list li {
+.comment-list li.comment-fa {
     position: relative;
     background: #fff;
-    margin: 0 0 10px 0;
+    /*margin: 0 0 10px 0;*/
     /*padding: 15px 20px;8*/
     padding:15px 20px 30px 20px;
+    /*border: 1px solid #ddd;*/
+    border-bottom: 1px dashed #e5e5e5;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 2px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.comment-ch {
+    margin: 0 0 10px 0;
     border: 1px solid #ddd;
+    position: relative;
+    background: #fff;
+    padding:15px 20px 30px 20px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     border-radius: 2px;
     word-wrap: break-word;
@@ -3395,17 +3425,26 @@ img.alignleft {
 .comment-list .children {
     list-style: none;
     margin: 8px 0 0 0;
+    padding-left: 50px;
 }
 
 .vcard .avatar {
     float: left;
-    width: 64px;
-    height: 64px;
+    width: 40px;
+    height: 40px;
     margin: 7px 10px 0 0;
     padding: 3px;
-    border-radius: 5px;
+    border-radius: 40px;
     border: 1px solid #ddd;
     transition: all 0.8s ease 0s;
+}
+
+.comment-ch:hover {
+    background-color: #f5fafe;
+}
+.comment-ex {
+    color: #dbdbdb;
+    font-size: 13px;
 }
 
 @-webkit-keyframes avatar {
@@ -3472,7 +3511,7 @@ img.alignleft {
     }
 }
 .comment-body {
-    min-height:75px;
+    /*min-height:75px;*/
 }
 
 .comment-body:hover .avatar {
@@ -3485,6 +3524,18 @@ img.alignleft {
     -webkit-animation-iteration-count: 1;
     animation-iteration-count: 1;
 }
+
+/* 畅言去广告 不起作用,放在源码中后起作用*/
+/*#feedAv {
+    position: absolute ! important;
+    height: 0px;
+    transform: scale(0) !important;
+}
+
+#pop_ad {
+    transform: scale(0) !important;
+    display: none !important;
+}*/
 
 .comment-author {
     color: #999;
@@ -3513,14 +3564,14 @@ img.alignleft {
 }
 
 .reply {
-    position: absolute;
+    /*position: absolute;*/
     top: 15px;
     right: 20px;
 }
 
 @media screen and (min-width: 900px) {
     .reply {
-        display: none;
+       /* display: none;*/
     }
 
     .comment-body:hover .reply {
@@ -3532,19 +3583,25 @@ img.alignleft {
 }
 
 .reply a {
-    background: #fff;
+    color: #999;
+    /*background: #fff;*/
     line-height: 25px;
-    display: block;
+    /*display: block;*/
     padding: 0 10px;
-    border: 1px solid #ddd;
-    border-radius: 2px;
+    /*border: 1px solid #ddd;
+    border-radius: 2px;*/
+    font-size: 13px;
 }
 
 .reply a:hover {
-    background: #009688;
-    color: #fff;
-    border: 1px solid #009688;
+    /*background: #009688;*/
+    color: #009688 !important;
+   /* border: 1px solid #009688;*/
     transition: all 0.2s ease-in 0s;
+}
+
+.comment-date {
+    font-size: 13px;
 }
 
 .at, .at a {
@@ -3672,10 +3729,12 @@ img.alignleft {
 #comment {
     background: #fff;
     width: 100%;
+    resize: none;
     margin: 0 10px 10px 0;
     padding: 5px;
+    overflow: hidden;
     border: 1px solid #ddd;
-    border-radius: 2px;
+    border-radius: 5px;
     -webkit-appearance: none;
 }
 
@@ -5367,7 +5426,7 @@ li.comments-anchor {
 #share {
     position: absolute;
     top: -60px;
-    right: -29px;
+    right: -80px;
     width: 302px;
     height: 68px;
     display: none;
@@ -5394,7 +5453,7 @@ li.comments-anchor {
 }
 
 #share .fa-qq:hover {
-    background: #ff7400 !important;
+    background: #00b0e8 !important;
 }
 
 #share .fa-weibo:hover {
